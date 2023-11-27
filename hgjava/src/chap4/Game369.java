@@ -49,7 +49,7 @@ public class Game369 {
 		// 갯수가 2 -> ♥♥
 		
 		// 동전 교환
-		Scanner sc = new Scanner(System.in);
+//		Scanner sc = new Scanner(System.in);
 //		System.out.print("##교환할 금액 : ");
 //		int money = sc.nextInt();
 //		System.out.println("500원 짜리 : " + money / 500 + "개");
@@ -89,9 +89,9 @@ public class Game369 {
 //		}
 		
 		// for.... 추가되었음....
-		for(int i=0; i<10; i++) {
-			System.out.println("hhhhhhhh");
-		}
+//		for(int i=0; i<10; i++) {
+//			System.out.println("hhhhhhhh");
+//		}
 		
 	}// end main
 
