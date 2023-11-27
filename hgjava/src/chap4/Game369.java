@@ -80,14 +80,18 @@ public class Game369 {
 //		}
 		
 		// 윤달 계산 프로그램
-		System.out.println("##년도 입력 : ");
-		int year = sc.nextInt();
-		if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
-			System.out.println(year + "년은 윤년입니다.");
-		}else {
-			System.out.println(year + "년은 평년입니다.");
-		}
+//		System.out.println("##년도 입력 : ");
+//		int year = sc.nextInt();
+//		if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
+//			System.out.println(year + "년은 윤년입니다.");
+//		}else {
+//			System.out.println(year + "년은 평년입니다.");
+//		}
 		
+		// for.... 추가되었음....
+		for(int i=0; i<10; i++) {
+			System.out.println("hhhhhhhh");
+		}
 		
 	}// end main
 
