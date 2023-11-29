@@ -6,6 +6,9 @@ public class Board {
 	String person;
 	String content;
 	String date;
+
+	// 나도 변경했습니다.
+
 	
 	void showInfo() {
 		System.out.println(boardNo + ". " + boardName + " " + person);
