@@ -9,7 +9,6 @@ public class Member {
 	private String memberName;
 	private String phone; // 010-1234-5678 -> '-'가 문자라 String 사용
 	private String gender; // Men or Women 
-	
 	// 생성자 : 필드의 초기값을 지정.
 	// 따로 정의안하면 기본생성자를 컴파일러가 알아서 생성해줌.
 	Member(){
