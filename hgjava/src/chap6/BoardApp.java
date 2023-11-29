@@ -41,17 +41,8 @@ public class BoardApp {
 				}
 				break;
 			case 3 :
-//				번호: 1 / 제목: 자바게시판입니다
-//				작성자: user01
-//				내용: 오늘은 숙제로 자바게시판을 만들어봅시다.
-//				일시: 2023-11-28
 				System.out.println("상세조회할 게시글번호를 입력하세요.");
 				no = Integer.parseInt(scn.nextLine());
-//				for(int i = 0; i < boards.length; i++) {
-//					if(boards[i] != null && boards[i].getBoardNo() == no) {
-//						boards[i].showDetail();
-//					}
-//				}
 				Board bor = exe1.getBoard(no);
 				if(bor != null) {
 					bor.showDetail();
@@ -62,6 +53,7 @@ public class BoardApp {
 			case 4 :
 				System.out.println("프로그램을 종료합니다.");
 				run = false;
+				
 			}//end of switch
 		}//end of while
 		System.out.println("end of prog");
