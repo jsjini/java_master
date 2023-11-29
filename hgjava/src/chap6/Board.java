@@ -7,9 +7,6 @@ public class Board {
 	String content;
 	String date;
 
-	// 나도 변경했습니다.
-
-	
 	// 이 부분이 변경되었습니다.
 	
 	void showInfo() {
