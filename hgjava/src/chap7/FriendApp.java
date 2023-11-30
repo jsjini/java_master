@@ -111,7 +111,6 @@ public class FriendApp {
 //					}
 //				}
 				exe.searchPhone(searchCond);
-				
 				break;
 			} else {
 				System.out.println("'1' 또는 '2' 중에서 선택하세요.");
