@@ -1,6 +1,7 @@
 package chap6;
 
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 // M(odel) V(iew) C(ontrol)
 public class BoardApp {
@@ -8,19 +9,19 @@ public class BoardApp {
 	// 데이터마다 다른 정보를 담을 필요가 없는 클래스는 static 멤버로 선언
 	private Scanner scn = new Scanner(System.in);
 	private String id = null;
-	
+
 	// 싱글톤 방식의 인스턴스 생성 p279
 	private static BoardApp instance = new BoardApp();
-	
+
 	// 생성자
 	private BoardApp() {
 	}
-	
+
 	public static BoardApp getInstance() {
 		return instance;
 	}
-	
-	private void boardAdd(){
+
+	private void boardAdd() {
 		System.out.print("등록할 계시글제목 입력>> ");
 		String name = scn.nextLine();
 		System.out.print("계시글 내용 입력>> ");
@@ -35,8 +36,8 @@ public class BoardApp {
 			System.out.println("등록 실패!");
 		}
 	}// end of boardAdd
-	
-	private void boardList(){
+
+	private void boardList() {
 		Board[] boardAry = BoardExe.BoardList();
 		showList(boardAry, 1);
 		while (true) {
@@ -47,10 +48,36 @@ public class BoardApp {
 			showList(boardAry, page);
 		}
 	}// end of boardList
-	
+
+//	private void getBoard() {
+//		System.out.println("조회할 게시글번호를 입력하세요.");
+//		while (true) {
+//			int no = 0;
+//			try {
+//				no = Integer.parseInt(scn.nextLine());
+//			} catch (NumberFormatException e) {
+//				System.out.print("정확한 '숫자'를 입력하세요>> ");
+//				continue;
+//			}
+//			Board result = BoardExe.getBoard(no);
+//			if (result != null) {
+//				result.showDetail();
+//			} else {
+//				System.out.println("존재하지 않는 정보");
+//			}
+//		}
+//	}// end of getBoard
 	private void getBoard() {
-		System.out.println("조회할 게시글번호를 입력하세요.");
-		int no = Integer.parseInt(scn.nextLine());
+		int no = 0;
+		while (true) {
+			System.out.println("조회할 게시글번호를 입력하세요.");
+			try {
+				no = Integer.parseInt(scn.nextLine());
+				break;
+			} catch (NumberFormatException e) {
+				System.out.print("글번호 잘못 선택했습니다. ");
+			}
+		}
 		Board result = BoardExe.getBoard(no);
 		if (result != null) {
 			result.showDetail();
@@ -58,8 +85,8 @@ public class BoardApp {
 			System.out.println("존재하지 않는 정보");
 		}
 	}// end of getBoard
-	
-	private void boardEdit(){
+
+	private void boardEdit() {
 		System.out.println("수정할 게시글번호를 입력하세요.");
 		int no = Integer.parseInt(scn.nextLine());
 		System.out.println("수정할 내용을 입력하세요.");
@@ -75,8 +102,8 @@ public class BoardApp {
 			System.out.println("수정 실패!");
 		}
 	}// end of boardEdit
-	
-	private void boardDel(){
+
+	private void boardDel() {
 		System.out.println("삭제할 게시글번호를 입력하세요.");
 		int no = Integer.parseInt(scn.nextLine());
 		// 권한 체크...
@@ -92,15 +119,14 @@ public class BoardApp {
 			System.out.println("삭제 실패!");
 		}
 	}// end of boardDel
-	
+
 	public void start() {
-		
+
 		boolean run = true;
-		
 
 		UserExe uexe = new UserExe();
 
-		while (true) { //로그인 처리
+		while (true) { // 로그인 처리
 			System.out.println("아이디를 입력하세요.");
 			id = scn.nextLine();
 			System.out.println("패스워드를 입력하세요.");
@@ -119,7 +145,14 @@ public class BoardApp {
 
 		while (run) {
 			System.out.println("1.등록 / 2.목록 / 3.상세조회 / 4.수정 / 5.삭제 / 6.종료");
-			int menu = Integer.parseInt(scn.nextLine());
+
+			int menu = 0;
+			try {
+				menu = Integer.parseInt(scn.nextLine());
+			} catch (NumberFormatException e) {
+				System.out.println("알맞은 '숫자'를 입력하세요!");
+				continue;
+			}
 			switch (menu) {
 			case 1: // 글등록
 				boardAdd();

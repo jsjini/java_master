@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class FriendApp {
 	static Scanner scn = new Scanner(System.in);
 	static FriendExe exe = new FriendExe();
-//	static Friend[] storage = new Friend[10];
 
 	public static void main(String[] args) {
 		boolean run = true;
@@ -49,7 +48,7 @@ public class FriendApp {
 			String univ = scn.nextLine();
 			System.out.println("전공>>> ");
 			String major = scn.nextLine();
-			friend = new UnivFriend(name, phone, univ, major);
+			friend = new UnivFriend(name, phone, univ, major);  // 자식클래스는 부모클래스의 타입으로 자동으로 형변환이 일어남.
 		} else if (subMenu == 3) {
 //		case 3 : // 이름, 연락처, 회사, 부서
 			System.out.println("회사>>> ");
@@ -58,13 +57,6 @@ public class FriendApp {
 			String dept = scn.nextLine();
 			friend = new CompFriend(name, phone, comp, dept);
 		}
-		// 배열에 추가
-//		for (int i = 0; i < storage.length; i++) {
-//			if (storage[i] == null) {
-//				storage[i] = friend;
-//				break;
-//			}
-//		}
 		if (exe.addFriend(friend)) {
 			System.out.println("저장완료~!");
 		} else {
@@ -73,11 +65,6 @@ public class FriendApp {
 	}// 등록
 
 	private static void friendList() {
-//		for (Friend fnd : storage) {
-//			if (fnd != null) {
-//				System.out.println(fnd.showInfo());
-//			}
-//		}
 		exe.friendList();
 	}// 목록
 
@@ -90,11 +77,6 @@ public class FriendApp {
 			if (subMenu == 1) {
 				System.out.println("이름을 입력하세요>>> ");
 				searchCond = scn.nextLine();
-//				for (Friend fnd : storage) {
-//					if (fnd != null && fnd.getName().equals(searchCond)) {
-//						System.out.println(fnd.showInfo());
-//					}
-//				}
 				Friend[] list = exe.searchFriend(searchCond);
 				for (int i = 0; i < list.length; i++) {
 					if(list[i] != null) {
@@ -105,11 +87,6 @@ public class FriendApp {
 			} else if (subMenu == 2) {
 				System.out.println("연락처를 입력하세요>>> ");
 				searchCond = scn.nextLine();
-//				for (Friend fnd : storage) {
-//					if (fnd != null && fnd.getPhone().equals(searchCond)) {
-//						System.out.println(fnd.showInfo());
-//					}
-//				}
 				exe.searchPhone(searchCond);
 				break;
 			} else {

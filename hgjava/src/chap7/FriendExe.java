@@ -24,7 +24,6 @@ public class FriendExe {
 	}
 
 	// 결과값이 null 여부로 체크(X)
-//	String searchCond = "";
 	public Friend[] searchFriend(String name) {
 		// 반환유형이 정해져있음
 		Friend[] result = new Friend[10];
@@ -40,13 +39,10 @@ public class FriendExe {
 
 	// 결과값이 null 여부로 체크
 	public Friend searchPhone(String phone) {
-//		Friend result = null;
 		for (int i = 0; i < storage.length; i++) {
 			if (storage[i] != null && storage[i].getPhone().equals(phone)) {
 				System.out.println(storage[i].showInfo());
 				break;
-//				result = storage[i];
-//				return result;
 			}
 		}
 		return null;
