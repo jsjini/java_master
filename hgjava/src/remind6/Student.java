@@ -23,7 +23,7 @@ public class Student {
 		this.math = math;
 	}
 	
-	String getStudentNo() {
+	public String getStudentNo() {
 		return studentNo;
 	}
 	String getStudentName() {
