@@ -1,7 +1,9 @@
 package todo.p20231205;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,10 +27,17 @@ public class EmpApp {
 				System.out.println("전화번호를 입력하세요");
 				String empTel = scn.nextLine();
 				System.out.println("입사일자를 입력하세요");
-//				Date empDate = scn.nextLine();
+				String empDate = scn.nextLine();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//				try {
+//				Date date = sdf.parse(empDate);
+//				}catch(ParseException e) {
+//					e.printStackTrace();
+//				}
+				Date date = null;
 				System.out.println("급여를 입력하세요");
 				int empPay = Integer.parseInt(scn.nextLine());
-//				lists.add(new Emp(empNo, empName, empTel, empDate, empPay));
+				lists.add(new Emp(empNo, empName, empTel, date, empPay));
 				break;
 			case 2:
 				break;
