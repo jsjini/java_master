@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class StudentApp {
 
 	public static void main(String[] args) {
-		Student[] students = new Student[100];
+//		Student[] students = new Student[100];
 		boolean run = true;
 		
 		Scanner scn = new Scanner(System.in);

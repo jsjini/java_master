@@ -28,18 +28,20 @@ public class EmpApp {
 				String empTel = scn.nextLine();
 				System.out.println("입사일자를 입력하세요");
 				String empDate = scn.nextLine();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//				try {
-//				Date date = sdf.parse(empDate);
-//				}catch(ParseException e) {
-//					e.printStackTrace();
-//				}
-				Date date = null;
 				System.out.println("급여를 입력하세요");
 				int empPay = Integer.parseInt(scn.nextLine());
-				lists.add(new Emp(empNo, empName, empTel, date, empPay));
+				if (empDate.equals("")) {
+					lists.add(new Emp(empNo, empName, empTel, empPay));
+				} else {
+					lists.add(new Emp(empNo, empName, empTel, empDate, empPay));
+				}
 				break;
 			case 2:
+				System.out.println(" 사번 / 이름 / 전화번호 / 입사일자 / 급여 ");
+				System.out.println("=================================");
+				for (int i = 0; i < lists.size(); i++) {
+					lists.get(i).showInfo();
+				}
 				break;
 			case 3:
 				break;
