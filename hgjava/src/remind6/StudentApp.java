@@ -10,6 +10,7 @@ public class StudentApp {
 		
 		Scanner scn = new Scanner(System.in);
 		StudentExe exe = new StudentExe();
+		StudentDAO dao = new StudentDAO();
 		
 		while(run) {
 			System.out.println("1.등록 2.목록 3.단건조회 4.수정 5.삭제 6.종료");
@@ -28,13 +29,7 @@ public class StudentApp {
 				
 				Student std = new Student(no, name, eng, math);
 				// students 배열에 한건 저장
-//				for (int i = 0; i < students.length; i++) {
-//					if(students[i] == null) {
-//						students[i] = std;
-//						break;
-//					}
-//				}
-				if(exe.addStudent(std)) {
+				if(dao.addStudent(std)) {
 					System.out.println("저장되었습니다.");
 				} else {
 					System.out.println("저장 중 오류발생!");
@@ -47,7 +42,8 @@ public class StudentApp {
 //						students[i].showInfo();
 //					}
 //				}
-				for(Student stdnt : exe.getStudentList()) {
+				Student[] stdAry = dao.getStudentList();
+				for(Student stdnt : stdAry) {
 					if(stdnt != null) {
 						stdnt.showInfo();
 					}
@@ -61,7 +57,7 @@ public class StudentApp {
 //						students[i].showInfo();
 //					}
 //				}
-				Student stnt = exe.getStudent(no);
+				Student stnt = dao.getStudent(no);
 				if(stnt != null) {
 					stnt.showInfo();
 				} else {
@@ -75,7 +71,7 @@ public class StudentApp {
 				eng = Integer.parseInt(scn.nextLine());
 				System.out.print("수정할 수학점수를 입력하세요>> ");
 				math = Integer.parseInt(scn.nextLine());
-				if(exe.modifyStudent(no, eng, math)) {
+				if(dao.modifyStudent(no, eng, math)) {
 					System.out.println("수정 완료");
 				} else {
 					System.out.println("수정 실패");
@@ -89,7 +85,7 @@ public class StudentApp {
 //						students[i] = null;
 //					}
 //				}
-				if(exe.removeStudent(name)) {
+				if(dao.removeStudent(name)) {
 					System.out.println("삭제 완료");
 				} else {
 					System.out.println("삭제 실패");

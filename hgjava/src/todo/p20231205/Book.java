@@ -5,20 +5,26 @@ import lombok.Data;
 @Data
 public class Book {
 	private String bookNo;
-	private String bookName;
-	private String writer;
-	private String publisher;
-	private int bookPrice;
+	private String bookTitle;
+	private String author;
+	private String press;
+	private int price;
 
-	public Book(String bookNo, String bookName, String writer, String publisher, int bookPrice) {
+	Book() {
+
+	}
+
+	public Book(String bookNo, String bookTitle, String author, String press, int price) {
 		this.bookNo = bookNo;
-		this.bookName = bookName;
-		this.writer = writer;
-		this.publisher = publisher;
-		this.bookPrice = bookPrice;
+		this.bookTitle = bookTitle;
+		this.author = author;
+		this.press = press;
+		this.price = price;
 	}
 
+	// 메소드 정의.
 	void showInfo() {
-		System.out.printf("%-5s %-7s %-5s %-6d", bookNo, bookName, writer, bookPrice);
+		System.out.println(bookNo + "   " + bookTitle + "   " + author + "   " + price);
 	}
+
 }
