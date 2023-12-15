@@ -100,8 +100,8 @@ public class HotelDAO {
 
 	ArrayList<HotelRoom> getRoomList1() {
 		getConn();
-		String sql = "select room_no, room_floor, room_view, to_char(room_price, '9,999,999') room_price\r\n" + "from room\r\n"
-				+ "where room_grade= '스탠다드'\r\n" + "and room_state = 'empty'";
+		String sql = "select room_no, room_floor, room_view, to_char(room_price, '9,999,999') room_price\r\n"
+				+ "from room\r\n" + "where room_grade= '스탠다드'\r\n" + "and room_state = 'empty'";
 		ArrayList<HotelRoom> rooms = new ArrayList<HotelRoom>();
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -122,8 +122,8 @@ public class HotelDAO {
 
 	ArrayList<HotelRoom> getRoomList2() {
 		getConn();
-		String sql = "select room_no, room_floor, room_view, to_char(room_price, '9,999,999') room_price\r\n" + "from room\r\n"
-				+ "where room_grade= '프리미어'\r\n" + "and room_state = 'empty'";
+		String sql = "select room_no, room_floor, room_view, to_char(room_price, '9,999,999') room_price\r\n"
+				+ "from room\r\n" + "where room_grade= '프리미어'\r\n" + "and room_state = 'empty'";
 		ArrayList<HotelRoom> rooms = new ArrayList<HotelRoom>();
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -144,8 +144,8 @@ public class HotelDAO {
 
 	ArrayList<HotelRoom> getRoomList3() {
 		getConn();
-		String sql = "select room_no, room_floor, room_view, to_char(room_price, '9,999,999') room_price\r\n" + "from room\r\n"
-				+ "where room_grade= '스위트'\r\n" + "and room_state = 'empty'";
+		String sql = "select room_no, room_floor, room_view, to_char(room_price, '9,999,999') room_price\r\n"
+				+ "from room\r\n" + "where room_grade= '스위트'\r\n" + "and room_state = 'empty'";
 		ArrayList<HotelRoom> rooms = new ArrayList<HotelRoom>();
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -166,8 +166,8 @@ public class HotelDAO {
 
 	ArrayList<HotelRoom> getRoomList4() {
 		getConn();
-		String sql = "select room_no, room_floor, room_view, to_char(room_price, '9,999,999') room_price\r\n" + "from room\r\n"
-				+ "where room_grade= '로열 스위트'\r\n" + "and room_state = 'empty'";
+		String sql = "select room_no, room_floor, room_view, to_char(room_price, '9,999,999') room_price\r\n"
+				+ "from room\r\n" + "where room_grade= '로열 스위트'\r\n" + "and room_state = 'empty'";
 		ArrayList<HotelRoom> rooms = new ArrayList<HotelRoom>();
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -193,8 +193,29 @@ public class HotelDAO {
 		System.out.println("4.로열 스위트 " + RoomGrade4());
 	}
 
-	payment(){
-		
+
+	HotelRoom getRoom(String no) {
+		getConn();
+		String sql = "select room_grade\r\n" + "from room\r\n" + "where room_no = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, no);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				HotelRoom room = new HotelRoom();
+				room.setRoomNo(rs.getString("room_no"));
+				room.setRoomGrade(rs.getString("room_grade"));
+				return room;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
-	
+
+	int payment() {
+		return 0;
+
+	}
+
 }

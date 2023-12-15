@@ -29,38 +29,34 @@ public class HotelApp {
 				case 1:
 					ArrayList<HotelRoom> roomAry = dao.getRoomList1();
 					for (HotelRoom room : roomAry) {
-							room.roomShowInfo1();
+						room.roomShowInfo1();
 					}
 					break;
 				case 2:
 					roomAry = dao.getRoomList2();
 					for (HotelRoom room : roomAry) {
-							room.roomShowInfo1();
+						room.roomShowInfo1();
 					}
 					break;
 				case 3:
 					roomAry = dao.getRoomList3();
 					for (HotelRoom room : roomAry) {
-							room.roomShowInfo1();
+						room.roomShowInfo1();
 					}
 					break;
 				case 4:
 					roomAry = dao.getRoomList4();
 					for (HotelRoom room : roomAry) {
-							room.roomShowInfo1();
+						room.roomShowInfo1();
 					}
 					break;
 				}
 				System.out.println("희망하는 객실번호 입력>> ");
 				String roomNo = scn.nextLine();
-				int submenu = Integer.parseInt(scn.nextLine());
-				switch (submenu) {
-
-				}
-
+				(dao.getRoom(roomNo)).roomShowInfo2();
 				int payment = dao.payment();
 
-				HotelReserve std = new HotelReserve(reserveNo, customerName, checkIn, checkOut, payment);
+				HotelReserve std = new HotelReserve(reserveNo, customerName, checkIn, checkOut, payment, roomNo);
 
 			}
 		}
