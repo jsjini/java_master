@@ -14,6 +14,7 @@ public class HotelApp {
 			int menu = Integer.parseInt(scn.nextLine());
 			switch (menu) {
 			case 1:
+				dao.reserveExe();
 				String reserveNo = dao.reserveNo();
 				System.out.println("예약자명 입력>> ");
 				String customerName = scn.nextLine();
@@ -53,11 +54,17 @@ public class HotelApp {
 				}
 				System.out.println("희망하는 객실번호 입력>> ");
 				String roomNo = scn.nextLine();
-				(dao.getRoom(roomNo)).roomShowInfo2();
-				int payment = dao.payment();
-
-				HotelReserve std = new HotelReserve(reserveNo, customerName, checkIn, checkOut, payment, roomNo);
-
+//				(dao.getRoom(roomNo)).roomShowInfo2();
+				int payment = Integer.parseInt(dao.payment(roomNo));
+				
+				HotelReserve res = new HotelReserve(reserveNo, customerName, checkIn, checkOut, payment, roomNo);
+				if(dao.addReserve(res)) {
+					dao.complete();
+				} else {
+					System.out.println("예약이 실패하였습니다.\n다시 시도해주세요.");
+				}
+				break;
+				
 			}
 		}
 	}

@@ -25,8 +25,31 @@ public class HotelDAO {
 		return conn;
 	}
 
+	void reserveExe() {
+		getConn();
+		String sql = "insert into test1 (test_1) values ('No_' || reserve_seq.nextval)";
+		try {
+			psmt = conn.prepareStatement(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	String reserveNo() {
-		return null;
+		getConn();
+		String sql = "select test_1 from test1";
+		String reserveNo = "";
+		try {
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				reserveNo = rs.getString("test_1");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reserveNo;
 
 	}
 
@@ -193,28 +216,59 @@ public class HotelDAO {
 		System.out.println("4.로열 스위트 " + RoomGrade4());
 	}
 
+//	HotelRoom getRoom(String roomNo) {
+//		getConn();
+//		String sql = "select room_grade\r\n" + "from room\r\n" + "where room_no = ?";
+//		try {
+//			psmt = conn.prepareStatement(sql);
+//			psmt.setString(1, roomNo);
+//			rs = psmt.executeQuery();
+//			if (rs.next()) {
+//				HotelRoom room = new HotelRoom();
+//				room.setRoomNo(rs.getString("room_no"));
+//				room.setRoomGrade(rs.getString("room_grade"));
+//				return room;
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
 
-	HotelRoom getRoom(String no) {
+	String payment(String roomNo) {
+
+		return "";
+	}
+
+	boolean addReserve(HotelReserve res) {
 		getConn();
-		String sql = "select room_grade\r\n" + "from room\r\n" + "where room_no = ?";
+		String sql = "insert into reserve\r\n" + "values(?, ?, ?, ?, ?, ?)";
 		try {
+			conn.setAutoCommit(false);
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, no);
-			rs = psmt.executeQuery();
-			if (rs.next()) {
-				HotelRoom room = new HotelRoom();
-				room.setRoomNo(rs.getString("room_no"));
-				room.setRoomGrade(rs.getString("room_grade"));
-				return room;
+			psmt.setString(1, res.getReserveNo());
+			psmt.setString(2, res.getCustomerName());
+			psmt.setString(3, res.getCheckIn());
+			psmt.setString(4, res.getCheckOut());
+			psmt.setInt(5, res.getPayment());
+			psmt.setString(6, res.getRoomNo());
+
+			int r = psmt.executeUpdate();
+			if (r > 0) {
+				conn.commit();
+				return true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return false;
 	}
 
-	int payment() {
-		return 0;
+	void complete() {
+		System.out.println("객실예약이 완료되었습니다.");
+		getConn();
+		String sql = "select members_grade, members_discount,\r\n" + "room_price + (room_price*members_discount)\r\n"
+				+ "from reserve\r\n" + "where reserve_no = (select testSeq.currval from reserve)";
 
 	}
 
