@@ -27,17 +27,33 @@ public class HotelDAO {
 
 	void reserveExe() {
 		getConn();
-		String sql = "insert into test1 (test_1) values ('No_' || reserve_seq.nextval)";
+		String sql = "insert into test1 (test_1) values ('HRN' || reserve_seq.nextval)";
 		try {
 			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	String reserveNo() {
+		reserveExe();
 		getConn();
-		String sql = "select test_1 from test1";
+		String sql = "select test_1\r\n" + "FROM(\r\n" + "    SELECT \r\n" + "        test_1 \r\n"
+				+ "    FROM test1\r\n" + "    ORDER BY ROWNUM DESC)\r\n" + "WHERE ROWNUM = 1";
 		String reserveNo = "";
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -45,12 +61,49 @@ public class HotelDAO {
 			if (rs.next()) {
 				reserveNo = rs.getString("test_1");
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return reserveNo;
+	}
 
+	String memberGrade(String customerName) {
+		String grade = "일반";
+		getConn();
+		String sql = "select members_grade, members_name\r\n" + "from members\r\n" + "where members_name = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, customerName);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				return rs.getString("members_grade");
+			}
+		} catch (SQLException e) {
+			return grade;
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return grade;
 	}
 
 	int RoomGrade1() {
@@ -66,6 +119,17 @@ public class HotelDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return gradeCnt;
 	}
@@ -83,6 +147,17 @@ public class HotelDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return gradeCnt;
 	}
@@ -100,6 +175,17 @@ public class HotelDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return gradeCnt;
 	}
@@ -117,6 +203,17 @@ public class HotelDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return gradeCnt;
 	}
@@ -131,7 +228,7 @@ public class HotelDAO {
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				HotelRoom room = new HotelRoom();
-				room.setRoomNo(rs.getString("room_no"));
+				room.setRoomNo(rs.getInt("room_no"));
 				room.setRoomFloor(rs.getInt("room_floor"));
 				room.setRoomView(rs.getString("room_view"));
 				room.setRoomPrice(rs.getString("room_price"));
@@ -139,6 +236,17 @@ public class HotelDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return rooms;
 	}
@@ -153,7 +261,7 @@ public class HotelDAO {
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				HotelRoom room = new HotelRoom();
-				room.setRoomNo(rs.getString("room_no"));
+				room.setRoomNo(rs.getInt("room_no"));
 				room.setRoomFloor(rs.getInt("room_floor"));
 				room.setRoomView(rs.getString("room_view"));
 				room.setRoomPrice(rs.getString("room_price"));
@@ -161,6 +269,17 @@ public class HotelDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return rooms;
 	}
@@ -175,7 +294,7 @@ public class HotelDAO {
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				HotelRoom room = new HotelRoom();
-				room.setRoomNo(rs.getString("room_no"));
+				room.setRoomNo(rs.getInt("room_no"));
 				room.setRoomFloor(rs.getInt("room_floor"));
 				room.setRoomView(rs.getString("room_view"));
 				room.setRoomPrice(rs.getString("room_price"));
@@ -183,6 +302,17 @@ public class HotelDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return rooms;
 	}
@@ -197,7 +327,7 @@ public class HotelDAO {
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				HotelRoom room = new HotelRoom();
-				room.setRoomNo(rs.getString("room_no"));
+				room.setRoomNo(rs.getInt("room_no"));
 				room.setRoomFloor(rs.getInt("room_floor"));
 				room.setRoomView(rs.getString("room_view"));
 				room.setRoomPrice(rs.getString("room_price"));
@@ -205,6 +335,17 @@ public class HotelDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return rooms;
 	}
@@ -215,34 +356,38 @@ public class HotelDAO {
 		System.out.println("3.스위트 " + RoomGrade3());
 		System.out.println("4.로열 스위트 " + RoomGrade4());
 	}
-
-//	HotelRoom getRoom(String roomNo) {
-//		getConn();
-//		String sql = "select room_grade\r\n" + "from room\r\n" + "where room_no = ?";
-//		try {
-//			psmt = conn.prepareStatement(sql);
-//			psmt.setString(1, roomNo);
-//			rs = psmt.executeQuery();
-//			if (rs.next()) {
-//				HotelRoom room = new HotelRoom();
-//				room.setRoomNo(rs.getString("room_no"));
-//				room.setRoomGrade(rs.getString("room_grade"));
-//				return room;
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-
-	String payment(String roomNo) {
-
-		return "";
+	
+	int payment(int roomNo) {
+		getConn();
+		String sql = "select room_price\r\n" + "from room\r\n" + "where room_no = ?";
+		int payment = 0;
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, roomNo);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				payment = rs.getInt("room_price");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return payment;
 	}
 
 	boolean addReserve(HotelReserve res) {
 		getConn();
-		String sql = "insert into reserve\r\n" + "values(?, ?, ?, ?, ?, ?)";
+		String sql = "insert into reserve\r\n" + "values(?, ?, ?, ?, ?, ?, ?)";
 		try {
 			conn.setAutoCommit(false);
 			psmt = conn.prepareStatement(sql);
@@ -251,8 +396,104 @@ public class HotelDAO {
 			psmt.setString(3, res.getCheckIn());
 			psmt.setString(4, res.getCheckOut());
 			psmt.setInt(5, res.getPayment());
-			psmt.setString(6, res.getRoomNo());
+			psmt.setInt(6, res.getRoomNo());
+			psmt.setString(7, res.getMemberGrade());
+			int r = psmt.executeUpdate();
+			if (r > 0) {
+				conn.commit();
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
 
+	void complete() {
+		System.out.println("객실예약이 완료되었습니다.");
+		System.out.println("----------  [예약정보]  -----------------");
+		getConn();
+		String sql = "select members_grade, members_discount,\r\n" + "room_price + (room_price*members_discount)\r\n"
+				+ "from reserve\r\n" + "where reserve_no = (select testSeq.currval from reserve)";
+
+	}
+
+	void membersExe() {
+		getConn();
+		String sql = "insert into test2 (test_2) values ('HMN' || members_seq.nextval)";
+		try {
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	String memberNo() {
+		membersExe();
+		getConn();
+		String sql = "select test_2\r\n" + "from(select test_2 \r\n" + "    from test2\r\n"
+				+ "    order by rownum desc)\r\n" + "where rownum = 1";
+		String membersNo = "";
+		try {
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				membersNo = rs.getString("test_2");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return membersNo;
+	}
+
+	boolean addMembers(HotelMembers mem) {
+		getConn();
+		String sql = "insert into members\r\n" + "values(?, ?, ?, ?, ?, ?)";
+		try {
+			conn.setAutoCommit(false);
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, mem.getMembersNo());
+			psmt.setString(2, mem.getMembersGrade());
+			psmt.setString(3, mem.getMembersName());
+			psmt.setString(4, mem.getMembersTel());
+			psmt.setString(5, mem.getMembersArea());
+			psmt.setDouble(6, mem.getMembersDiscount());
 			int r = psmt.executeUpdate();
 			if (r > 0) {
 				conn.commit();
@@ -264,12 +505,49 @@ public class HotelDAO {
 		return false;
 	}
 
-	void complete() {
-		System.out.println("객실예약이 완료되었습니다.");
-		getConn();
-		String sql = "select members_grade, members_discount,\r\n" + "room_price + (room_price*members_discount)\r\n"
-				+ "from reserve\r\n" + "where reserve_no = (select testSeq.currval from reserve)";
+	void complete2() {
+		System.out.println("회원가입이 완료되었습니다.\n감사합니다 ^_^");
+		System.out.println("------------------------------------------------");
+	}
 
+	void information() {
+		System.out.println(" [등급]\t\t   [조건]\t\t     [혜택]");
+		System.out.println("------------------------------------------------");
+		System.out.println(" 일반\t\t비회원\t\t   없음");
+		System.out.println(" 브라운\t\t회원가입시\t\t   객실 3% 할인");
+		System.out.println(" 실버\t\t연간 1박 숙박시\t   객실 5% 할인");
+		System.out.println(" 골드\t\t연간 10박 숙박시\t   객실 7% 할인");
+		System.out.println(" 다이아몬드\t\t연간 50박 숙박시\t   객실 10% 할인");
+		System.out.println("------------------------------------------------");
+	}
+
+	HotelMembers getCheck(String membersTel) {
+		getConn();
+		String sql = "select * from members where members_tel = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, membersTel);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				HotelMembers members = new HotelMembers();
+				members.setMembersNo(rs.getString("members_no"));
+				members.setMembersGrade(rs.getString("members_grade"));
+				members.setMembersName(rs.getString("members_name"));
+				members.setMembersTel(rs.getString("members_tel"));
+				members.setMembersArea(rs.getString("members_area"));
+				members.setMembersDiscount(rs.getDouble("members_discount"));
+				return members;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	void nonmember() {
+		System.out.println("-------- [회원정보] ------------");
+		System.out.println("회원님은 [일반] 등급입니다.\n적용되는 할인율은 [ 0 % ]입니다.\n회원가입시 [브라운] 등급으로 상승됩니다.");
+		System.out.println("------------------------------------------------");
 	}
 
 }

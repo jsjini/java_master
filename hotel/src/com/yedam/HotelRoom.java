@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class HotelRoom {
-	private String roomNo;
+	private int roomNo;
 	private String roomGrade;
 	private int roomFloor;
 	private String roomView;
@@ -15,7 +15,7 @@ public class HotelRoom {
 
 	}
 
-	public HotelRoom(String roomNo, String roomGrade, int roomFloor, String roomView, String roomPrice, String roomState) {
+	public HotelRoom(int roomNo, String roomGrade, int roomFloor, String roomView, String roomPrice, String roomState) {
 		this.roomNo = roomNo;
 		this.roomGrade = roomGrade;
 		this.roomFloor = roomFloor;
