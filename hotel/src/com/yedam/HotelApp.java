@@ -56,7 +56,8 @@ public class HotelApp {
 				}
 				System.out.print("희망하는 객실번호 입력>> ");
 				int roomNo = Integer.parseInt(scn.nextLine());
-				int payment = dao.payment(roomNo);
+				int roomPrice = dao.roomPrice(roomNo);
+				double payment = dao.payment(roomPrice, memberGrade);
 				HotelReserve res = new HotelReserve(reserveNo, customerName, checkIn, checkOut, payment, roomNo,
 						memberGrade);
 				if (dao.addReserve(res)) {

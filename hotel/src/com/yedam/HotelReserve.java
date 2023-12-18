@@ -9,7 +9,7 @@ public class HotelReserve {
 	private String customerName;
 	private String checkIn;
 	private String checkOut;
-	private int payment;
+	private double payment;
 	private int roomNo;
 	private String memberGrade;
 	
@@ -17,7 +17,7 @@ public class HotelReserve {
 
 	}
 
-	public HotelReserve(String reserveNo, String customerName, String checkIn, String checkOut, int payment, int roomNo, String memberGrade) {
+	public HotelReserve(String reserveNo, String customerName, String checkIn, String checkOut, double payment, int roomNo, String memberGrade) {
 		this.reserveNo = reserveNo;
 		this.customerName = customerName;
 		this.checkIn = checkIn;

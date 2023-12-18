@@ -87,7 +87,7 @@ public class HotelDAO {
 			psmt.setString(1, customerName);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-				return rs.getString("members_grade");
+				grade = rs.getString("members_grade"); // 수정함 return rs.getString("members_grade")
 			}
 		} catch (SQLException e) {
 			return grade;
@@ -356,17 +356,17 @@ public class HotelDAO {
 		System.out.println("3.스위트 " + RoomGrade3());
 		System.out.println("4.로열 스위트 " + RoomGrade4());
 	}
-	
-	int payment(int roomNo) {
+
+	int roomPrice(int roomNo) {
 		getConn();
 		String sql = "select room_price\r\n" + "from room\r\n" + "where room_no = ?";
-		int payment = 0;
+		int roomPrice = 0;
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, roomNo);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-				payment = rs.getInt("room_price");
+				roomPrice = rs.getInt("room_price");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -382,7 +382,23 @@ public class HotelDAO {
 				e.printStackTrace();
 			}
 		}
-		return payment;
+		return roomPrice;
+	}
+
+	double payment(int roomPrice, String memberGrade) {
+		double paymemt = 0;
+		if (memberGrade == "일반") {
+			paymemt = roomPrice;
+		} else if (memberGrade == "브라운") {
+			paymemt = roomPrice * 1.03;
+		} else if (memberGrade == "실버") {
+			paymemt = roomPrice * 1.05;
+		} else if (memberGrade == "골드") {
+			paymemt = roomPrice * 1.07;
+		} else if (memberGrade == "다이아몬드") {
+			paymemt = roomPrice * 1.10;
+		}
+		return paymemt;
 	}
 
 	boolean addReserve(HotelReserve res) {
@@ -395,7 +411,7 @@ public class HotelDAO {
 			psmt.setString(2, res.getCustomerName());
 			psmt.setString(3, res.getCheckIn());
 			psmt.setString(4, res.getCheckOut());
-			psmt.setInt(5, res.getPayment());
+			psmt.setDouble(5, res.getPayment());
 			psmt.setInt(6, res.getRoomNo());
 			psmt.setString(7, res.getMemberGrade());
 			int r = psmt.executeUpdate();
