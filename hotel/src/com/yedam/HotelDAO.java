@@ -110,6 +110,10 @@ public class HotelDAO {
 
 	int RoomGrade1() {
 		getConn();
+		// select * from room where room_no NOT IN (
+		// select room_no from reserve where check_in >= ? OR check_out <=
+		// date_add(?,INTERVAL -1 DAY))
+		// 이런식으로 만들어보자.
 		String sql = "select count(room_state)\r\n" + "from room\r\n" + "where room_grade = '스탠다드'\r\n"
 				+ "and room_state = 'empty'";
 		int gradeCnt = 0;
@@ -885,6 +889,30 @@ public class HotelDAO {
 		return false;
 	}
 
-	
+	void roomState(int roomNo) {
+		getConn();
+		String sql = "update reserve\r\n" + "set room_state = 'full'\r\n" + "where room_no = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, roomNo);
+			int r = psmt.executeUpdate();
+			if (r > 0) {
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 }
