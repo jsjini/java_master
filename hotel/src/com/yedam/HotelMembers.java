@@ -25,7 +25,7 @@ public class HotelMembers {
 	}
 
 	void showInfo() {
-		System.out.println("-------- [회원정보] ------------");
+		System.out.println("------ [나의 등급] ----------");
 		System.out.println("회원님은 ["+membersGrade+"] 등급입니다.\n적용되는 할인율은 [ "+(int)(membersDiscount*100)+" % ]입니다.");
 		System.out.println("------------------------------------------------");
 	}

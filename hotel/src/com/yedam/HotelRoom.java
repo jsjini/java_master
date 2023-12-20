@@ -28,9 +28,5 @@ public class HotelRoom {
 		System.out.println("  " + getRoomNo() + "\t  " + getRoomFloor() + "층\t " + getRoomView()
 				+ "  " + getRoomPrice());
 	}
-//	void roomShowInfo2() {
-//		System.out.println("객실번호: " + getRoomNo() + " / 객실등급: " + getRoomGrade()+ "\n객실이 선택되었습니다.");
-//	}
-	
 	
 }

@@ -14,7 +14,7 @@ public class HotelDAO {
 	HotelRoom room = new HotelRoom();
 
 	Connection getConn() {
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String url = "jdbc:oracle:thin:@192.168.0.25:1521:xe";
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
 			conn = DriverManager.getConnection(url, "dev", "dev");
@@ -108,16 +108,19 @@ public class HotelDAO {
 		return grade;
 	}
 
-	int RoomGrade1() {
+	int RoomGrade1(String checkIn, String checkOut) {
 		getConn();
-		String sql = "select count(room_state)\r\n" + "from room\r\n" + "where room_grade = '스탠다드'\r\n"
-				+ "and room_state = 'empty'";
+		String sql = "select count(room_no)\r\n" + "from room\r\n" + "where room_grade = '스탠다드'\r\n"
+				+ "and room_no NOT IN (select room_no\r\n" + "                     from reserve \r\n"
+				+ "                     where check_in >= ? \r\n" + "                     and check_out <= ?)";
 		int gradeCnt = 0;
 		try {
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, checkIn);
+			psmt.setString(2, checkOut);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-				gradeCnt = rs.getInt("count(room_state)");
+				gradeCnt = rs.getInt("count(room_no)");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -136,16 +139,19 @@ public class HotelDAO {
 		return gradeCnt;
 	}
 
-	int RoomGrade2() {
+	int RoomGrade2(String checkIn, String checkOut) {
 		getConn();
-		String sql = "select count(room_state)\r\n" + "from room\r\n" + "where room_grade = '프리미어'\r\n"
-				+ "and room_state = 'empty'";
+		String sql = "select count(room_no)\r\n" + "from room\r\n" + "where room_grade = '프리미어'\r\n"
+				+ "and room_no NOT IN (select room_no\r\n" + "                     from reserve \r\n"
+				+ "                     where check_in >= ? \r\n" + "                     and check_out <= ?)";
 		int gradeCnt = 0;
 		try {
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, checkIn);
+			psmt.setString(2, checkOut);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-				gradeCnt = rs.getInt("count(room_state)");
+				gradeCnt = rs.getInt("count(room_no)");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -164,16 +170,19 @@ public class HotelDAO {
 		return gradeCnt;
 	}
 
-	int RoomGrade3() {
+	int RoomGrade3(String checkIn, String checkOut) {
 		getConn();
-		String sql = "select count(room_state)\r\n" + "from room\r\n" + "where room_grade = '스위트'\r\n"
-				+ "and room_state = 'empty'";
+		String sql = "select count(room_no)\r\n" + "from room\r\n" + "where room_grade = '스위트'\r\n"
+				+ "and room_no NOT IN (select room_no\r\n" + "                     from reserve \r\n"
+				+ "                     where check_in >= ? \r\n" + "                     and check_out <= ?)";
 		int gradeCnt = 0;
 		try {
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, checkIn);
+			psmt.setString(2, checkOut);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-				gradeCnt = rs.getInt("count(room_state)");
+				gradeCnt = rs.getInt("count(room_no)");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -192,16 +201,19 @@ public class HotelDAO {
 		return gradeCnt;
 	}
 
-	int RoomGrade4() {
+	int RoomGrade4(String checkIn, String checkOut) {
 		getConn();
-		String sql = "select count(room_state)\r\n" + "from room\r\n" + "where room_grade = '로열 스위트'\r\n"
-				+ "and room_state = 'empty'";
+		String sql = "select count(room_no)\r\n" + "from room\r\n" + "where room_grade = '로열 스위트'\r\n"
+				+ "and room_no NOT IN (select room_no\r\n" + "                     from reserve \r\n"
+				+ "                     where check_in >= ? \r\n" + "                     and check_out <= ?)";
 		int gradeCnt = 0;
 		try {
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, checkIn);
+			psmt.setString(2, checkOut);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-				gradeCnt = rs.getInt("count(room_state)");
+				gradeCnt = rs.getInt("count(room_no)");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -220,13 +232,17 @@ public class HotelDAO {
 		return gradeCnt;
 	}
 
-	ArrayList<HotelRoom> getRoomList1() {
+	ArrayList<HotelRoom> getRoomList1(String checkIn, String checkOut) {
 		getConn();
 		String sql = "select room_no, room_floor, room_view, to_char(room_price, '9,999,999') room_price\r\n"
-				+ "from room\r\n" + "where room_grade= '스탠다드'\r\n" + "and room_state = 'empty'";
+				+ "from room\r\n" + "where room_grade = '스탠다드'\r\n" + "and room_no NOT IN (select room_no\r\n"
+				+ "                     from reserve \r\n" + "                     where check_in >= ?\r\n"
+				+ "                     and check_out <= ?)\r\n" + "order by room_no";
 		ArrayList<HotelRoom> rooms = new ArrayList<HotelRoom>();
 		try {
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, checkIn);
+			psmt.setString(2, checkOut);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				HotelRoom room = new HotelRoom();
@@ -253,13 +269,17 @@ public class HotelDAO {
 		return rooms;
 	}
 
-	ArrayList<HotelRoom> getRoomList2() {
+	ArrayList<HotelRoom> getRoomList2(String checkIn, String checkOut) {
 		getConn();
 		String sql = "select room_no, room_floor, room_view, to_char(room_price, '9,999,999') room_price\r\n"
-				+ "from room\r\n" + "where room_grade= '프리미어'\r\n" + "and room_state = 'empty'";
+				+ "from room\r\n" + "where room_grade = '프리미어'\r\n" + "and room_no NOT IN (select room_no\r\n"
+				+ "                     from reserve \r\n" + "                     where check_in >= ?\r\n"
+				+ "                     and check_out <= ?)\r\n" + "order by room_no";
 		ArrayList<HotelRoom> rooms = new ArrayList<HotelRoom>();
 		try {
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, checkIn);
+			psmt.setString(2, checkOut);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				HotelRoom room = new HotelRoom();
@@ -286,13 +306,17 @@ public class HotelDAO {
 		return rooms;
 	}
 
-	ArrayList<HotelRoom> getRoomList3() {
+	ArrayList<HotelRoom> getRoomList3(String checkIn, String checkOut) {
 		getConn();
 		String sql = "select room_no, room_floor, room_view, to_char(room_price, '9,999,999') room_price\r\n"
-				+ "from room\r\n" + "where room_grade= '스위트'\r\n" + "and room_state = 'empty'";
+				+ "from room\r\n" + "where room_grade = '스위트'\r\n" + "and room_no NOT IN (select room_no\r\n"
+				+ "                     from reserve \r\n" + "                     where check_in >= ?\r\n"
+				+ "                     and check_out <= ?)\r\n" + "order by room_no";
 		ArrayList<HotelRoom> rooms = new ArrayList<HotelRoom>();
 		try {
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, checkIn);
+			psmt.setString(2, checkOut);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				HotelRoom room = new HotelRoom();
@@ -319,13 +343,17 @@ public class HotelDAO {
 		return rooms;
 	}
 
-	ArrayList<HotelRoom> getRoomList4() {
+	ArrayList<HotelRoom> getRoomList4(String checkIn, String checkOut) {
 		getConn();
 		String sql = "select room_no, room_floor, room_view, to_char(room_price, '9,999,999') room_price\r\n"
-				+ "from room\r\n" + "where room_grade= '로열 스위트'\r\n" + "and room_state = 'empty'";
+				+ "from room\r\n" + "where room_grade = '로열 스위트'\r\n" + "and room_no NOT IN (select room_no\r\n"
+				+ "                     from reserve \r\n" + "                     where check_in >= ?\r\n"
+				+ "                     and check_out <= ?)\r\n" + "order by room_no";
 		ArrayList<HotelRoom> rooms = new ArrayList<HotelRoom>();
 		try {
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, checkIn);
+			psmt.setString(2, checkOut);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				HotelRoom room = new HotelRoom();
@@ -352,13 +380,13 @@ public class HotelDAO {
 		return rooms;
 	}
 
-	void roomShowInfo() {
+	void roomShowInfo(String checkIn, String checkOut) {
 		System.out.println();
 		System.out.println("[예약가능한 객실 현황]");
-		System.out.println("1.스탠다드 등급 [" + RoomGrade1() + "개] 객실");
-		System.out.println("2.프리미어 등급 [" + RoomGrade2() + "개] 객실");
-		System.out.println("3.스위트 등급 [" + RoomGrade3() + "개] 객실");
-		System.out.println("4.로열 스위트 등급 [" + RoomGrade4() + "개] 객실");
+		System.out.println("1.스탠다드 등급 [" + RoomGrade1(checkIn, checkOut) + "개] 객실");
+		System.out.println("2.프리미어 등급 [" + RoomGrade2(checkIn, checkOut) + "개] 객실");
+		System.out.println("3.스위트 등급 [" + RoomGrade3(checkIn, checkOut) + "개] 객실");
+		System.out.println("4.로열 스위트 등급 [" + RoomGrade4(checkIn, checkOut) + "개] 객실");
 		System.out.println();
 	}
 
@@ -448,11 +476,11 @@ public class HotelDAO {
 		return false;
 	}
 
-	public void complete(String reserveNo) {
+	void complete(String reserveNo) {
 		getConn();
-		String sql = "select re.reserve_no, re.customer_name, re.check_in, re.check_out, re.room_no, r.room_grade, r.room_price,\r\n"
-				+ "m.members_grade, m.members_discount, re.payment\r\n" + "from reserve re join room r \r\n"
-				+ "on r.rooms_no = re.room_no\r\n" + "join members m\r\n" + "on re.members_grade = m.members_grade\r\n"
+		String sql = "select re.reserve_no, re.customer_name, to_char(re.check_in, 'yy/mm/dd') as \"check_in\", to_char(re.check_out,'yy/mm/dd') as \"check_out\", re.room_no, r.room_grade, r.room_price, \r\n"
+				+ "m.members_grade, m.members_discount, re.payment\r\n" + "from reserve re join room r\r\n"
+				+ "on r.room_no = re.room_no\r\n" + "join members m\r\n" + "on re.members_grade = m.members_grade\r\n"
 				+ "where re.reserve_no = ?";
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -478,8 +506,8 @@ public class HotelDAO {
 				System.out.println("감사합니다 ^_^");
 				System.out.println();
 			} else {
-				sql = "select re.reserve_no, re.customer_name, re.check_in, re.check_out, re.room_no, r.room_grade, r.room_price,\r\n"
-						+ "re.payment\r\n" + "from reserve re join room r \r\n" + "on r.rooms_no = re.room_no\r\n"
+				sql = "select re.reserve_no, re.customer_name, to_char(re.check_in, 'yy/mm/dd') as \"check_in\", to_char(re.check_out,'yy/mm/dd') as \"check_out\", re.room_no, r.room_grade, r.room_price,\r\n"
+						+ "re.payment\r\n" + "from reserve re join room r\r\n" + "on r.room_no = re.room_no\r\n"
 						+ "where re.reserve_no = ?";
 				psmt = conn.prepareStatement(sql);
 				psmt.setString(1, reserveNo);
@@ -600,7 +628,7 @@ public class HotelDAO {
 
 	void information() {
 		System.out.println("================================================");
-		System.out.println(" [등급]\t\t   [조건]\t\t      [혜택]");
+		System.out.println(" [등급]\t\t   [조건]\t\t     [혜택]");
 		System.out.println("================================================");
 		System.out.println(" 일반\t\t비회원\t\t   없음");
 		System.out.println("");
@@ -611,7 +639,7 @@ public class HotelDAO {
 		System.out.println(" 골드\t\t연간 10박 숙박시\t   객실 7% 할인");
 		System.out.println("");
 		System.out.println(" 다이아몬드\t\t연간 50박 숙박시\t   객실 10% 할인");
-		System.out.println("-------------------------------------------------------");
+		System.out.println("-------------------------------------------------");
 	}
 
 	HotelMembers getCheck(String membersTel) {
@@ -695,9 +723,9 @@ public class HotelDAO {
 
 	void reserveCheck(String reserveNo) {
 		getConn();
-		String sql = "select re.reserve_no, re.customer_name, re.check_in, re.check_out, re.room_no, r.room_grade, r.room_price,\r\n"
+		String sql = "select re.reserve_no, re.customer_name, to_char(re.check_in, 'yy/mm/dd') as \"check_in\", to_char(re.check_out, 'yy/mm/dd') as \"check_out\", re.room_no, r.room_grade, r.room_price,\r\n"
 				+ "m.members_grade, m.members_discount, re.payment\r\n" + "from reserve re join room r \r\n"
-				+ "on r.rooms_no = re.room_no\r\n" + "join members m\r\n" + "on re.members_grade = m.members_grade\r\n"
+				+ "on r.room_no = re.room_no\r\n" + "join members m\r\n" + "on re.members_grade = m.members_grade\r\n"
 				+ "where re.reserve_no = ?";
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -720,8 +748,8 @@ public class HotelDAO {
 				System.out.println("------------------------------------------------");
 				System.out.println();
 			} else {
-				sql = "select re.reserve_no, re.customer_name, re.check_in, re.check_out, re.room_no, r.room_grade, r.room_price,\r\n"
-						+ "re.payment\r\n" + "from reserve re join room r \r\n" + "on r.rooms_no = re.room_no\r\n"
+				sql = "select re.reserve_no, re.customer_name, to_char(re.check_in, 'yy/mm/dd') as \"check_in\", to_char(re.check_out, 'yy/mm/dd') as \"check_out\", re.room_no, r.room_grade, r.room_price,\r\n"
+						+ "re.payment\r\n" + "from reserve re join room r \r\n" + "on r.room_no = re.room_no\r\n"
 						+ "where re.reserve_no = ?";
 				psmt = conn.prepareStatement(sql);
 				psmt.setString(1, reserveNo);
@@ -789,17 +817,15 @@ public class HotelDAO {
 	}
 
 	String memberGrade2(String reserveNo) {
-		String grade = "일반";
+		String grade = null;
 		getConn();
-		String sql = "select m.members_grade\r\n" + "from reserve re, members m\r\n" + "where reserve_no = ?";
+		String sql = "select members_grade\r\n" + "from reserve\r\n" + "where reserve_no = ?";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, reserveNo);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-				grade = rs.getString("members_grade"); // 수정함 return rs.getString("members_grade")
-			} else {
-				return grade;
+				grade = rs.getString("members_grade");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -885,6 +911,61 @@ public class HotelDAO {
 		return false;
 	}
 
-	
+	String inCheck(String reserveNo) {
+		getConn();
+		String sql = "select to_char(check_in, 'yy/mm/dd') as \"check_in\"\r\n" + "from reserve\r\n"
+				+ "where reserve_no = ?";
+		String checkIn = null;
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, reserveNo);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				checkIn = rs.getString("check_in");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return checkIn;
+	}
 
+	String outCheck(String reserveNo) {
+		getConn();
+		String sql = "select to_char(check_out, 'yy/mm/dd') as \"check_out\"\r\n" + "from reserve\r\n"
+				+ "where reserve_no = ?";
+		String checkOut = null;
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, reserveNo);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				checkOut = rs.getString("check_out");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return checkOut;
+	}
 }
