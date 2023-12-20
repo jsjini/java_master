@@ -641,7 +641,7 @@ public class HotelDAO {
 		System.out.println(" 골드\t\t연간 10박 숙박시\t   객실 7% 할인");
 		System.out.println("");
 		System.out.println(" 다이아몬드\t\t연간 50박 숙박시\t   객실 10% 할인");
-		System.out.println("-------------------------------------------------");
+		System.out.println("------------------------------------------------");
 	}
 
 	HotelMembers getCheck(String membersTel) {
@@ -912,9 +912,6 @@ public class HotelDAO {
 		}
 		return false;
 	}
-
-
-	
 
 	String outCheck(String reserveNo) {
 		getConn();

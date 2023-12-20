@@ -148,7 +148,7 @@ public class HotelApp {
 							if (dao.modifyCheck(checkIn, checkOut, reserveNo)) {
 								System.out.println();
 								System.out.println("예약 수정이 완료되었습니다.");
-								System.out.println();
+								dao.reserveCheck(reserveNo);
 							} else {
 								System.out.println("변경 실패. 다시 시도해주세요.");
 							}
