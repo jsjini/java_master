@@ -110,9 +110,11 @@ public class HotelDAO {
 
 	int RoomGrade1(String checkIn, String checkOut) {
 		getConn();
+
 		String sql = "select count(room_no)\r\n" + "from room\r\n" + "where room_grade = '스탠다드'\r\n"
 				+ "and room_no NOT IN (select room_no\r\n" + "                     from reserve \r\n"
 				+ "                     where check_in >= ? \r\n" + "                     and check_out <= ?)";
+
 		int gradeCnt = 0;
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -911,34 +913,8 @@ public class HotelDAO {
 		return false;
 	}
 
-	String inCheck(String reserveNo) {
-		getConn();
-		String sql = "select to_char(check_in, 'yy/mm/dd') as \"check_in\"\r\n" + "from reserve\r\n"
-				+ "where reserve_no = ?";
-		String checkIn = null;
-		try {
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, reserveNo);
-			rs = psmt.executeQuery();
-			if (rs.next()) {
-				checkIn = rs.getString("check_in");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (conn != null)
-					conn.close();
-				if (rs != null)
-					rs.close();
-				if (psmt != null)
-					psmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return checkIn;
-	}
+
+	
 
 	String outCheck(String reserveNo) {
 		getConn();
