@@ -28,6 +28,6 @@ public class HotelRoom {
 		System.out.println();
 		System.out.println("이용가능한 객실 현황");
 		System.out.println("1. "+ roomGrade + "이용가능한 객실 현황");
-		System.out.println(bookNo + "   " + bookTitle + "   " + author + "   " + price);
+//		System.out.println(bookNo + "   " + bookTitle + "   " + author + "   " + price);
 	}
 }

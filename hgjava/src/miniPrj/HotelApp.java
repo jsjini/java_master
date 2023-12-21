@@ -36,9 +36,8 @@ public class HotelApp {
 				
 				}
 				
-				int payment = dao.payment();
 
-				HotelReserve std = new HotelReserve(reserveNo, customerName, checkIn, checkOut, payment);
+//				HotelReserve std = new HotelReserve(reserveNo, customerName, checkIn, checkOut, payment);
 				
 				
 			}
