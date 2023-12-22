@@ -1,12 +1,13 @@
-package common;
+package com.yedam.student.vo;
 
 public class Student {
+	// db 칼럼명과 이름 맞춰야함.
 	private String studentNo; // student_no
 	private String studentName;
 	private int eng;
 	private int math;
-	Student(){
-		
+	
+	public Student(){
 	}
 	
 	public void showInfo() {
