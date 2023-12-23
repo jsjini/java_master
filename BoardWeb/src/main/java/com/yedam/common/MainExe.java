@@ -24,11 +24,11 @@ public class MainExe {
 		} else {
 			System.out.println("수정실패");
 		}
-		
-//		List<BoardVO> list = mapper.selectList();
-//		for(BoardVO vo : list) {
-//			System.out.println(vo.toString());
-//		}
+		System.out.println("ㅇㅇ");
+		List<BoardVO> list = mapper.selectList();
+		for(BoardVO vo : list) {
+			System.out.println(vo.toString());
+		}
 		
 		
 		
