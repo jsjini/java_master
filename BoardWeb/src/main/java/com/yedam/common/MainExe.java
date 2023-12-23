@@ -14,21 +14,20 @@ public class MainExe {
 		BoardMapper mapper = session.getMapper(BoardMapper.class);
 		
 		
-		
 		BoardVO vo = new BoardVO();
 		vo.setContent("더 열심히 공부해라");
-		vo.setBoardNo(5);
+		vo.setBoardNo(3);
 		
 		if(mapper.updateBoard(vo) == 1) {
 			System.out.println("수정성공");
 		} else {
 			System.out.println("수정실패");
 		}
-		System.out.println("ㅇㅇ");
-		List<BoardVO> list = mapper.selectList();
-		for(BoardVO vo : list) {
-			System.out.println(vo.toString());
-		}
+//		List<BoardVO> list = mapper.selectList();
+//		for(BoardVO vo : list) {
+//			System.out.println(vo.toString());
+//		}
+		
 		
 		
 		
