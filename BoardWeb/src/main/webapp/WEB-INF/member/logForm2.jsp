@@ -115,7 +115,7 @@ button:hover {
 	%>
 	
 	<% if (msg != null) { %>	
-	<p><%= msg %></p>
+	<p style="padding: 20px 20px 0px 15px; font-weight: bold; color: #f7392c;"><%= msg %></p>
 	<% } %>
 
 <form action="login.do">

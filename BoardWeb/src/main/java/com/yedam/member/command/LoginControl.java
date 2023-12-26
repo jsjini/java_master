@@ -36,9 +36,9 @@ public class LoginControl implements Control {
 				e.printStackTrace();
 			}
 		} else {
-			req.setAttribute("message", "아이디와 비밀번호를 확인하세요.");
+			req.setAttribute("message", "아이디와 비밀번호를 확인해주세요!!");
 			try {
-				req.getRequestDispatcher("WEB-INF/member/logForm.jsp").forward(req, resp);
+				req.getRequestDispatcher("WEB-INF/member/logForm2.jsp").forward(req, resp);
 			} catch (ServletException | IOException e) {
 				e.printStackTrace();
 			}
