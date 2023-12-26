@@ -11,6 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yedam.board.command.AddBoardControl;
+import com.yedam.board.command.BoardFormControl;
+import com.yedam.board.command.BoardListControl;
+import com.yedam.board.command.GetBoardControl;
+import com.yedam.board.command.ModifyBoardControl;
+import com.yedam.board.command.ModifyFormControl;
+import com.yedam.board.command.RemoveBoardControl;
+import com.yedam.board.command.RemoveFormControl;
+
 //@WebServlet("/url매핑.....")
 //@WebServlet("*.do")
 public class FrontController extends HttpServlet {
@@ -26,12 +35,25 @@ public class FrontController extends HttpServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		System.out.println("init() 호출");
-		map.put("/main.do", new MainControl());
-		map.put("/sub.do", new SubControl());
+//		map.put("/main.do", new MainControl());
+//		map.put("/sub.do", new SubControl());
+		
+		// 게시판관련
+		map.put("/boardList.do", new BoardListControl());
+		map.put("/boardForm.do", new BoardFormControl());
+		map.put("/addBoard.do", new AddBoardControl());
+		map.put("/getBoard.do", new GetBoardControl());
+		map.put("/modifyForm.do", new ModifyFormControl());
+		map.put("/modifyBoard.do", new ModifyBoardControl());
+		map.put("/removeForm.do", new RemoveFormControl());
+		map.put("/removeBoard.do", new RemoveBoardControl());
+		
 	}
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		
 		System.out.println("service() 호출");
 		String url = req.getRequestURI(); // /BoardWeb/main.do
 		String context = req.getContextPath(); // /BoardWeb
