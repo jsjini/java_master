@@ -14,7 +14,7 @@ public class LoginFormControl implements Control {
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
 		// 화면 호출
 		try {
-			req.getRequestDispatcher("WEB-INF/member/logForm.jsp").forward(req, resp);
+			req.getRequestDispatcher("WEB-INF/member/logForm2.jsp").forward(req, resp);
 		} catch (ServletException | IOException e) {
 			e.printStackTrace();
 		}
