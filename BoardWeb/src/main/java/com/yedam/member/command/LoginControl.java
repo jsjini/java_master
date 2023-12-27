@@ -24,7 +24,7 @@ public class LoginControl implements Control {
 		MemberService svc = new MemberServiceImpl();
 
 		MemberVO vo = svc.login(id, pw);
-
+		
 		if (vo != null) {
 			// 세션객체 로그인정보 저장
 			HttpSession session = req.getSession();
@@ -38,7 +38,7 @@ public class LoginControl implements Control {
 		} else {
 			req.setAttribute("message", "아이디와 비밀번호를 확인해주세요!!");
 			try {
-				req.getRequestDispatcher("WEB-INF/member/logForm2.jsp").forward(req, resp);
+				req.getRequestDispatcher("member/logForm2.tiles").forward(req, resp);
 			} catch (ServletException | IOException e) {
 				e.printStackTrace();
 			}
