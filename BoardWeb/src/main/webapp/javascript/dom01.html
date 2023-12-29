@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dom01.html</title>
+</head>
+<body>
+    <!--표-->
+    
+
+    <script>
+        console.log(window);
+        let btn = document.createElement('button'); // 다큐먼트 오브젝트
+        btn.innerText = 'Btn';
+        //addEventListener('유형', 실행(){})
+        btn.addEventListener('click', function (){  
+            window.alert('Click 됨');
+        })
+
+        console.log(btn);
+
+        document.querySelector('body').appendChild(btn);
+
+        let body = document.querySelector('body');
+
+        const fruits = ['apple','banana','cherry']; //자바스크립트 배열만드는 양식. const 말고 let 써도됨.
+        let ul = document.createElement('ul');
+        //배열 for.. of..
+        for(let fruit of fruits){
+            let li1 = document.createElement('li');
+            li1.innerText = fruit;
+            ul.appendChild(li1);
+        }
+        body.appendChild(ul);
+
+        let table = document.createElement('table');
+        let thead = document.createElement('thead');
+        let tr = document.createElement('tr');
+        table.appendChild(thead);
+        thead.appendChild(tr);
+        const list = ['아이디','이름','전화번호']
+        for(let lis of list){
+            let th = document.createElement('th');
+            th.innerText = lis;
+            tr.appendChild(th);
+        }
+        let tbody = document.createElement('tbody');
+        let tr1 = document.createElement('tr');
+        table.appendChild(tbody);
+        tbody.appendChild(tr1);
+        const member1 = ['user1','홍길동','010-1111']
+        for(let mem of member1){
+            let td = document.createElement('td');
+            td.innerText = mem;
+            tr1.appendChild(td);
+        }
+        
+        console.log(table);
+        body.appendChild(table);
+
+    </script>
+</body>
+</html>
