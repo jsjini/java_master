@@ -13,8 +13,8 @@
 
         span {
             display: inline-block;
-            width: 80px;
-            height: 30px;
+            width: 100px;
+            height: 25px;
             background-color: yellow;
         }
     </style>
@@ -25,10 +25,27 @@
         <span>ipsum</span> -->
         
     </div>
+    <br>
+    <input type="text" id="delInp">
+    <button id="selBtn">선택</button>
     <script>
         const words = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque ipsa dolorum eius? Natus dolorum quia dolorem accusamus. Sit ut quo, tenetur, enim, voluptas rem asperiores natus veniam saepe facilis cum.';
         const wordAry = words.split(' ');
-        
+        for(let word of wordAry){
+            let span = document.createElement('span');
+            span.innerText = word
+            document.getElementById('show').appendChild(span);
+        }
+        document.getElementById('selBtn').addEventListener('click', function() {
+            let text = document.querySelector('#delInp').value;
+            let target = document.querySelectorAll('#show>span');
+            for(let tar of target){
+                if(text == tar.innerText){
+                    tar.remove();
+                }
+            }
+            document.getElementById('delInp').value = '';
+        });
     </script>
 </body>
 </html>
