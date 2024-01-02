@@ -6,8 +6,8 @@
     <title>todo/20231229.html</title>
     <style>
         #show {
-            width: 300px;
-            height: 250px;
+            width: 315px;
+            height: 295px;
             background-color: aqua;
         }
 
@@ -15,45 +15,62 @@
             display: inline-block;
             width: 100px;
             height: 25px;
+            margin: 2px;
             background-color: yellow;
             text-align: center;
         }
     </style>
 </head>
 <body>
+    <input type="text" name="userValue" id="userValue">
+    <button id="delBtn">삭제</button>
+    
     <div id="show">
         <!-- <span>Lorem,</span>
         <span>ipsum</span> -->
         
     </div>
-    <br>
-    <input type="text" id="delInp">
-    <button id="selBtn">enter</button>
     <script>
-        let input = document.getElementById("delInp");
+        let input = document.getElementById("userValue");
         input.addEventListener('keyup', function (e) {
             if (e.keyCode === 13) {
-                document.getElementById('selBtn').click();
+                document.getElementById('delBtn').click();
             }
         });
 
         const words = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque ipsa dolorum eius? Natus dolorum quia dolorem accusamus. Sit ut quo, tenetur, enim, voluptas rem asperiores natus veniam saepe facilis cum.';
         const wordAry = words.split(' ');
-        for(let word of wordAry){
+        // for(let word of wordAry){
+        //     let span = document.createElement('span');
+        //     span.innerText = word
+        //     document.getElementById('show').appendChild(span);
+        // }
+        let show = document.getElementById('show');
+        wordAry.forEach(function(word){
             let span = document.createElement('span');
-            span.innerText = word
-            document.getElementById('show').appendChild(span);
-        }
+            span.innerText = word;
+            show.appendChild(span);
+        });
         
-        document.getElementById('selBtn').addEventListener('click', function() {
-            let text = document.querySelector('#delInp').value;
-            let target = document.querySelectorAll('#show>span');
-            for(let tar of target){
-                if(text == tar.innerText){
-                    tar.remove();
+        // id = delBtn의 클릭 이벤트
+        document.getElementById('delBtn').addEventListener('click', function() {
+            // 사용자의 입력값과 화면상의 span 요소를 가져와서 비교해서 span.remove();
+            let userInput = document.querySelector('#userValue').value;
+            // let userInput = document.querySelector('input[name=userValue]').value;
+            let spanAll = document.querySelectorAll('span');
+            // console.log(spanAll);
+            // for(let item of spanAll){
+            //     if(userInput == item.innerText){
+            //         item.remove();
+            //     }
+            // };
+            spanAll.forEach(function(item){
+                if(userInput == item.innerText){
+                    item.remove();
                 }
-            }
-            document.getElementById('delInp').value = '';
+            });
+            // 사용자 입력화면 초기화
+            document.getElementById('userValue').value = '';
         });
     </script>
 </body>
