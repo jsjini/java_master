@@ -17,3 +17,5 @@ friend.showFriends = function(){
 }
 console.log(friend);
 console.log(friend.pets[0]['friends']);
+
+// 참조값을 복사

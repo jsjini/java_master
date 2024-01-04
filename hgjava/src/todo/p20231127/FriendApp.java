@@ -57,7 +57,7 @@ public class FriendApp {
 			case 3 :
 				System.out.println("목록 출력>>>");
 				for(Friend i : friends) {
-					System.out.print("이름: " + i.name  + "\t  전화번호: " + i.tel + "\t혈액형: " + i.blood + "\n");
+					System.out.print("이름: " + i.name  + "\t 전화번호: " + i.tel + "\t혈액형: " + i.blood + "\n");
 				}
 				break;
 			case 4 : 
