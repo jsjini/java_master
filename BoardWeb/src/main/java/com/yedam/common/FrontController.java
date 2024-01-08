@@ -94,6 +94,7 @@ public class FrontController extends HttpServlet {
 		// 코로나19 관련
 		map.put("/covid19.do", new Covid19Form());
 		
+		
 		// 지도 api
 		map.put("/map.do", new MapFrom());
 	}
