@@ -1,8 +1,7 @@
 package com.yedam.reply.service;
 
+import java.util.HashMap;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 
 import com.yedam.reply.vo.ReplyVO;
 
@@ -12,4 +11,7 @@ public interface ReplyService {
 	boolean removeReply(int replyNo);
 	boolean addReply(ReplyVO vo);
 	ReplyVO getReply(int replyNo);
+	int getTotalCnt (int boardNo);
+	
+	List<HashMap<String, Object>> chartData();
 }

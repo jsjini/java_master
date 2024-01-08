@@ -26,7 +26,10 @@ function makeLi(reply = {}) {
 			let result = JSON.parse(delHtp.responseText);
 			if (result.retCode == 'OK') {
 				alert('삭제됨.');
-				btn.parentElement.remove();
+				
+				// bno, page => 페이지리스트, 페이징리스트 업데이트
+				showList(pageInfo);
+				
 			} else if (result.retCode == 'NG') {
 				alert('처리중 에러.');
 			}
