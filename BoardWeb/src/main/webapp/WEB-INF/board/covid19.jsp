@@ -50,17 +50,27 @@
         </div>
         <script>
             let page = 1;
+            
+            function pageList(e) {
+                e.preventDefault();
+                page = this.getAttribute("href");
+                showList(page);
+                // 페이지를 생성하는 함수를 호출.
+                pagingList(page);
+            }
+            
+            let tbody = document.getElementById("list");
             function showList(page) {
                 console.log(page);
+                tbody.innerHTML = '';
                 const url = 'https://api.odcloud.kr/api/15077586/v1/centers?page=' + page + '&perPage=10&serviceKey=02RFiwEXkug23AQuMdn0yFgtH24GTlGUzXBF3wPEj0D7po0QWoY37eNbYGTxLNmb%2FH7Y89Uh8RhQoOjxThsjgA%3D%3D';
                 const fields = ['id', 'centerName', 'phoneNumber', 'sido', 'address'] // 화면에 보여줄 항목 지정
 
-                let tbody = document.getElementById("list");
                 const xhtp = new XMLHttpRequest();
                 xhtp.open('get', url);
                 xhtp.send();
                 xhtp.onload = function () {
-                    console.log(JSON.parse(xhtp.responseText));
+                    // console.log(JSON.parse(xhtp.responseText));
                     // tr > td * n
                     let result = JSON.parse(xhtp.responseText);
                     result.data.forEach(item => {
@@ -78,11 +88,11 @@
                     });
                 }
             }
+            
             showList(page);
             pagingList();
+            let paging = document.querySelector('#paging');
             function pagingList(pag = 1) {
-                page = 1;
-                let paging = document.querySelector('#paging');
                 const url = 'https://api.odcloud.kr/api/15077586/v1/centers?page=' + page + '&perPage=10&serviceKey=02RFiwEXkug23AQuMdn0yFgtH24GTlGUzXBF3wPEj0D7po0QWoY37eNbYGTxLNmb%2FH7Y89Uh8RhQoOjxThsjgA%3D%3D';
                 const xhtp = new XMLHttpRequest();
                 xhtp.open('get', url);
@@ -91,31 +101,46 @@
                     // tr > td * n
                     let result = JSON.parse(xhtp.responseText);
                     paging.innerHTML = '';
-                    let realLast = Math.ceil(result.totalCount / 5);
-                    let lastPage = Math.ceil(pag / 5) * 10;
+                    let realLast = Math.ceil(result.totalCount / 10);
+                    let lastPage = Math.ceil(pag / 10) * 10;
                     let startPage = lastPage - 9;
+                    if(lastPage > realLast) {
+                        lastPage = realLast;
+                    }
+                    let prev = Boolean(startPage > 1);
+                    let next = Boolean(lastPage < realLast);
+                    console.log(realLast);
+                    console.log(lastPage);
+                    if (prev) {
+        				let aTag = document.createElement('a');
+        				aTag.href = startPage - 1;
+        				aTag.innerText = '이전';
+        				aTag.addEventListener('click', pageList);
+        				paging.appendChild(aTag);
+        			}
+                    
                     for (let p = startPage; p <= lastPage; p++) {
                         let aTag = document.createElement('a');
                         if (p == pag) {
                             aTag.setAttribute('class', 'active');
                         }
-                        aTag.href = 'covid19.do?page='+p;
-                        page = '${page}';
-                        aTag.innerText = p;
-                        aTag.addEventListener('click', function() {
-                            showList(page);
-                        });
+                        aTag.href = p;
+        				aTag.innerText = p;
+        				aTag.addEventListener('click', pageList);
                         paging.appendChild(aTag);
                     }
+                    
+                    if (next) {
+        				let aTag = document.createElement('a');
+        				aTag.href = lastPage + 1;
+        				aTag.innerText = '다음';
+        				aTag.addEventListener('click', pageList);
+        				paging.appendChild(aTag);
+        			}
+                    
                 }
             }
-            // function pageList(e) {
-            //     e.preventDefault();
-            //     page = this.getAttribute("href");
-            //     showList(page);
-            //     // 페이지를 생성하는 함수를 호출.
-            //     pagingList(page);
-            // }
+            
             
 
 
