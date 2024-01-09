@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>basic.html</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        // javascript 객체 (속성, 메소드) vs jquery 객체 (메소드 기반)
+        $(document).ready(function () {
+            const obj = {}
+    
+            // ${"선택자"}
+            let ul = $('<ul />').append($('<li />').text('Apple'),
+                                        $('<li />').text('Banana')
+            ); // 메소드 체이닝
+            ul.attr('class', 'parent'); // set어트리뷰트와 동일
+            console.log(ul);
+            $('#show').append(ul); // appendChild 와 동일
+
+            // javascript
+            const ob = ['Apple', 'Banana'];
+            let ul1 = document.createElement('ul');
+            for (let a of ob){
+                let li1 = document.createElement('li');
+                li1.innerText = a;
+                ul1.appendChild(li1);
+            }
+            document.querySelector('#dom').appendChild(ul1);
+
+            ob.forEach(a => {
+                let li1 = document.createElement('li');
+                li1.innerText = a;
+                ul1.appendChild(li1);
+            })
+            document.querySelector('#dom').appendChild(ul1);
+
+            let li1 = document.createElement('li');
+            let li2 = document.createElement('li');
+            li1.innerText = 'Apple';
+            li2.innerText = 'Banana';
+            ul1.setAttribute('class', 'parent');
+            ul1.appendChild(li1);
+            ul1.appendChild(li2);
+            document.querySelector('#dom').appendChild(ul1);
+
+            // onclick: $(객체).on('이벤트유형', '실행함수');
+            $('#show li').on('mouseover', function() {
+                $(this).css('background','yellow');
+                console.log($(this));
+            })
+
+            $('#show li').on('mouseout', function() {
+                $(this).css('background','');
+            })
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id="show"></div>
+
+    <div id="dom"></div>
+</body>
+
+</html>
