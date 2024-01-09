@@ -2,86 +2,103 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-			$('#addBtn').on('click', function(){
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="../css/styles.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script>
+		// .find() 메소드는 선택한 요소의 자손(descendant) 요소 중에서 전달받은 선택자에 해당하는 자손 요소를 모두 선택합니다.
+		// .parentsUntil() 메소드는 선택한 요소의 조상 요소 중에서 전달받은 선택자에 해당하는 요소 바로 이전까지의 요소만을 모두 선택합니다.
+		// .first() 메소드는 선택한 요소 중에서 첫 번째 요소를 선택하고, .last() 메소드는 마지막 요소를 선택합니다.
+		// .is() 메소드는 선택한 요소 중에서 전달받은 선택자에 해당하는 요소가 하나라도 존재하면 참을 반환합니다.
+		// .prop() 메소드는 선택한 요소 집합의 첫 번째 요소의 지정된 프로퍼티(property)값을 반환하거나, 선택한 요소의 지정된 프로퍼티를 전달받은 값으로 설정합니다.
+
+
+		$(document).ready(function () {
+			$('#addBtn').on('click', function () {
 				let id = $('input[name="memberId"]').val();
 				let name = $('input[name="memberName"]').val();
 				let phone = $('input[name="phone"]').val();
-                let template = $('tr.template').clone();
-                template.find('td:first-child').text(id);
-                template.find('td:eq(1)').text(name);
-                template.find('td:eq(2)').text(phone);
-                template.removeClass('template');
-                $('#list').append(template);
-				$('input[name="memberId"]').val('');
-				$('input[name="memberName"]').val('');
-				$('input[name="phone"]').val('');
+				if (id && name && phone != '') {
+					let template = $('tr.template').clone();
+					template.find('td:first-child').text(id);
+					template.find('td:eq(1)').text(name);
+					template.find('td:eq(2)').text(phone);
+					template.removeClass('template');
+					$('#list').append(template);
+					$('input[name="memberId"]').val('');
+					$('input[name="memberName"]').val('');
+					$('input[name="phone"]').val('');
+				} else {
+					alert('값을 모두 입력해주세요');
+				}
 			});
 
-            $('#delSelected').on('click', function(){
-                $(':checked').parentsUntil('tbody').remove();
-            });
-            
-        
-        })
-    </script>
+			$('#delSelected').on('click', function () {
+				$('#list').find(':checked').parentsUntil('tbody').remove();
+			});
+			
+			$(':checkbox').first().on('click', function () {
+				if ($(':checkbox').first().is(':checked')) {
+					$('#list').find(':checkbox').prop('checked', true);
+				} else {
+					$('#list').find(':checkbox').prop('checked', false);
+				}
+			});
+		})
+	</script>
 </head>
 
 <body>
 
-    <h3>회원정보</h3>
-    <table class="table">
-        <tr>
-            <th>아이디</th>
-            <td><input type="text" name="memberId"></td>
-        </tr>
-        <tr>
-            <th>이름</th>
-            <td><input type="text" name="memberName"></td>
-        </tr>
-        <tr>
-            <th>연락처</th>
-            <td><input type="text" name="phone"></td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center">
-                <button id="addBtn">등록</button>
-                <button id="delSelected">선택삭제</button>
-            </td>
-        </tr>
-    </table>
+	<h3>회원정보</h3>
+	<table class="table">
+		<tr>
+			<th>아이디</th>
+			<td><input type="text" name="memberId"></td>
+		</tr>
+		<tr>
+			<th>이름</th>
+			<td><input type="text" name="memberName"></td>
+		</tr>
+		<tr>
+			<th>연락처</th>
+			<td><input type="text" name="phone"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<button id="addBtn">등록</button>
+				<button id="delSelected">선택삭제</button>
+			</td>
+		</tr>
+	</table>
 
-    <h3>회원목록</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>회원아이디</th>
-                <th>회원명</th>
-                <th>회원연락처</th>
-                <th><input type="checkbox"></th>
-            </tr>
-        </thead>
-        <tbody id="list">
-            <tr class="template">
-                <td>user1</td>
-                <td>홍길동</td>
-                <td>010-2342-4564</td>
-                <td><input type="checkbox"></td>
-            </tr>
-            <tr>
-                <td>user2</td>
-                <td>김윤경</td>
-                <td>010-2223-9864</td>
-                <td><input type="checkbox"></td>
-            </tr>
-        </tbody>
-    </table>
+	<h3>회원목록</h3>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>회원아이디</th>
+				<th>회원명</th>
+				<th>회원연락처</th>
+				<th><input type="checkbox"></th>
+			</tr>
+		</thead>
+		<tbody id="list">
+			<tr class="template">
+				<td>user1</td>
+				<td>홍길동</td>
+				<td>010-2342-4564</td>
+				<td><input type="checkbox"></td>
+			</tr>
+			<tr>
+				<td>user2</td>
+				<td>김윤경</td>
+				<td>010-2223-9864</td>
+				<td><input type="checkbox"></td>
+			</tr>
+		</tbody>
+	</table>
 
 </body>
 
