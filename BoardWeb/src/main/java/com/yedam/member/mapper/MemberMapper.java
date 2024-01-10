@@ -12,4 +12,9 @@ public interface MemberMapper {
 	public List<MemberVO> selectList();
 	public MemberVO selectOne(String id);
 	public int insertMember(MemberVO vo);
+	
+	// 입력, 삭제
+	public int insertMember2(MemberVO vo);
+	public int deleteMember(String id);
+	
 }

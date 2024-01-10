@@ -22,4 +22,13 @@
 	values(#{id}, #{pw}, #{name})
   </insert>
   
+  <insert id="insertMember2" parameterType="member">
+  	insert into member
+  	values(#{id}, #{pw}, #{name}, #{responsibility}, #{image})
+  </insert>
+  
+  <delete id="deleteMember" parameterType="string">
+  	delete from member where id = #{id}
+  </delete>
+  
 </mapper>

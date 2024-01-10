@@ -10,4 +10,8 @@ public interface MemberService {
 	public List<MemberVO> memberList();
 	public MemberVO getMember(String id);
 	public boolean addMember(MemberVO vo);
+	// 등록, 삭제
+	public boolean addMember2(MemberVO vo);
+	public boolean removeMember(String id);
+	
 }
